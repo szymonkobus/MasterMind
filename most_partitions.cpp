@@ -1,13 +1,8 @@
-// MASTER MIND
-// MAX PARTISION
-// PREFER POSSIBLE
-
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
 #include <vector>
 #include <cmath>
-
 
 void set_random_seed();
 int randn(int n);
@@ -69,16 +64,11 @@ struct mm_code_maker{
 };
 
 struct mm_solver{
-  void init(int i_length, int i_num){                                           //DZIAŁA
+  void init(int i_length, int i_num){
     length = i_length;
     num = i_num;
-                                                                                //zmienic poznej moze
     first = true;
-    std::vector<int> temp;
-
-    for(int place = 0; place < length; place++) {
-      temp.push_back(0);
-    }
+    std::vector<int> temp(length,0);
 
     for(int i = 0; i < pow(num,length); i++){
       possible.push_back(temp);
@@ -86,7 +76,6 @@ struct mm_solver{
     }
   }
 
-  /// do not alter the function interface (name, parameter list, void return)
   void create_attempt(std::vector<int>& attempt){
     std::vector<int> temp;
 
