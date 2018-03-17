@@ -8,30 +8,15 @@
 #include <vector>
 #include <cmath>
 
-/// you can add other headers as needed
-/// but only headers from the standard library
-/// and not the algorithm header
 
-/// do not use using namespace std
-
-/// functions for random number generation, do not alter the declarations
 void set_random_seed();
 int randn(int n);
 
-/// you can define and use additional functions and structs,
-/// add here the declarations for any other functions
-/// and/or structs you wish to define and use
-/// (the implementation for functions that don't belong to a struct
-/// should be added after the main)
-
-/// do not alter the name
 struct mm_code_maker{
-  /// do not alter this function
   void init(int i_length, int i_num){
     length = i_length;
     num = i_num;
   }
-  /// do not alter this function
   void generate_sequence(){
     for(int i = 0; i < length; i++){
       sequence.push_back(randn(num));
