@@ -31,7 +31,7 @@ struct mm_code_maker{
     }
     sequence = temp;
   }
-  
+
   void give_feedback(const std::vector<int>& attempt, int& black_hits, int& white_hits){
     black_hits = 0;
     white_hits = 0;
@@ -68,7 +68,6 @@ struct mm_code_maker{
   int num;
 };
 
-/// this is the struct definition for the solver, do not alter the name
 struct mm_solver{
   /// do not alter the function interface (name, parameter list, void return)
   void init(int i_length, int i_num){                                           //DZIAŁA
