@@ -217,24 +217,6 @@ struct mm_solver{
     //std::cout << "epl: " << external_path_length << '\n';
   }
 
-  long int total_external_path_length(long int& epl, std::vector< std::vector< std::vector< std::vector <int> > > >& partition_of_possible,
-      std::vector<std::vector<int> >& curr_past_attempts, std::vector<int> current_attempt){
-      for(int row = 0; row < length; row++){
-        for(int col = 0; col <= length - row; col++){
-          if(!(partition_of_possible[row][col].empty())){
-            min_external_path_length(epl, partition_of_possible[row][col], curr_past_attempts, current_attempt);
-            if(epl == -1){
-              epl = -1;
-              return -1;
-            }
-            if(epl < max){
-              max = epl;
-            }
-          }
-        }
-      }
-      return epl;
-    }
   void initalize_partion(std::vector< std::vector< std::vector< std::vector <int> > > >& partition_of_possible){
     for(int row = 0; row <= length; row++){
       std::vector< std::vector< std::vector<int> > > temp1;
