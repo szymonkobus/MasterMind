@@ -69,7 +69,6 @@ struct mm_code_maker{
 };
 
 struct mm_solver{
-  /// do not alter the function interface (name, parameter list, void return)
   void init(int i_length, int i_num){                                           //DZIAŁA
     length = i_length;
     num = i_num;
