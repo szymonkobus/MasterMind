@@ -34,7 +34,7 @@ struct mm_code_maker{
         white_hits = 0;
         int* numFreqAttempt = new int[num];
         int* numFreqSequence = new int[num];
-
+        
         for(int i = 0; i < num; i++){
           numFreqAttempt[i] = 0;
           numFreqSequence[i] = 0;
@@ -90,12 +90,10 @@ struct mm_solver{
           }
           if(notpossible){
               attempt.clear();
-          }
-          else{
+          }else {
               ready = true;
           }
       }
-      //std::cout << "Guess nr: " << guesses << '\n';
     }
 
     void learn(std::vector<int>& attempt, int black_hits, int white_hits){
@@ -110,13 +108,13 @@ struct mm_solver{
         int black_hits = 0;
         int white_hits = 0;
         char* bw = new char[length];
-        for(int i = 0; i < length; i++){          //mark black hits
+        for(int i = 0; i < length; i++){
           bw[i] = 'n';
           if(attempt[i] == past_att[i]){
             bw[i] = 'b';
           }
         }
-        for(int att = 0; att < length; att++){        //mark white hits
+        for(int att = 0; att < length; att++){
           if(bw[att] != 'b'){
             bool change = false;
             for(int seq = 0; (seq < length) && (!change); seq++) {
@@ -143,12 +141,6 @@ struct mm_solver{
 
     long int guesses;
 };
-
-/// before the submission you need to remove the main
-/// (either delete it or comment it out)
-/// otherwise it will intefere with the automated testing
-
-
 
 int main(){
     set_random_seed();
@@ -198,14 +190,6 @@ int main(){
     return 0;
 }
 
-
-
-/// not a great implementation for set_random_seed and for randn;
-/// if you are trying to get better results you may want to change
-/// the implementation using C++11 features, see for instance
-/// https://isocpp.org/files/papers/n3551.pdf
-/// but don't change the interface/declaration of the functions
-
 void set_random_seed(){
     std::srand(std::time(0));
 }
@@ -213,5 +197,3 @@ void set_random_seed(){
 int randn(int n){
     return std::rand() % n;
 }
-
-/// add here the implementation for any other functions you wish to define and use
