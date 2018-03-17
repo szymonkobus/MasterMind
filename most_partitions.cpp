@@ -31,7 +31,7 @@ struct mm_code_maker{
     }
     sequence = temp;
   }
-  /// do not alter name and parameter list for this function
+  
   void give_feedback(const std::vector<int>& attempt, int& black_hits, int& white_hits){
     black_hits = 0;
     white_hits = 0;
