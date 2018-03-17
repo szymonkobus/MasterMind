@@ -76,6 +76,8 @@ struct mm_solver{
     }
     max =  num * length * pow(num, length) / 2;
     no_of_partitions = length * (length + 3) /2;
+    std::vector<int> temp_lb(possible.size(),-1);
+    cash_low_bound = temp_lb;
     //DEBUGING
     std::vector<int> v(100,0);
     depth = v;
@@ -128,6 +130,7 @@ struct mm_solver{
   bool first;
   long int max;
   int no_of_partitions;
+  std::vector<int> cash_low_bound;
   //def
   std::vector<int> depth;
   int id;
@@ -135,7 +138,7 @@ struct mm_solver{
   void min_external_path_length(long int& external_path_length, std::vector<std::vector <int> >& t_possible, std::vector<std::vector<int> >& attempted, std::vector<int>& attempt){
     //std::cout << "depth: " << id << " count: " << depth[id] << '\n';
     external_path_length += t_possible.size();
-    if(external_path_length >= max){
+    if(external_path_length + lower_bound_est(t_possible.size()) - t_possible.size()>= max){
       external_path_length = -1;
     }else if(t_possible.size() <= 2){
       if(t_possible.size()==1){
@@ -217,24 +220,6 @@ struct mm_solver{
     //std::cout << "epl: " << external_path_length << '\n';
   }
 
-  long int total_external_path_length(long int& epl, std::vector< std::vector< std::vector< std::vector <int> > > >& partition_of_possible,
-      std::vector<std::vector<int> >& curr_past_attempts, std::vector<int> current_attempt){
-      for(int row = 0; row < length; row++){
-        for(int col = 0; col <= length - row; col++){
-          if(!(partition_of_possible[row][col].empty())){
-            min_external_path_length(epl, partition_of_possible[row][col], curr_past_attempts, current_attempt);
-            if(epl == -1){
-              epl = -1;
-              return -1;
-            }
-            if(epl < max){
-              max = epl;
-            }
-          }
-        }
-      }
-      return epl;
-    }
   void initalize_partion(std::vector< std::vector< std::vector< std::vector <int> > > >& partition_of_possible){
     for(int row = 0; row <= length; row++){
       std::vector< std::vector< std::vector<int> > > temp1;
@@ -260,6 +245,30 @@ struct mm_solver{
     for(int i = 0; i < possible.size(); i++){
       give_feedback(attempt, possible[i], black_hits, white_hits);
       partition_of_possible[black_hits][white_hits].push_back(possible[i]);
+    }
+  }
+  int lower_bound_est(int no_possiblities){
+    if(cash_low_bound[no_possiblities] != -1){
+      return cash_low_bound[no_possiblities];
+    }else{
+        if(no_possiblities == 1){
+        cash_low_bound[1] = 1;
+        return 1;
+      }
+      int estimation = 1;
+      int height = 1;
+      while(estimation <= no_possiblities){
+        estimation *= (no_of_partitions);
+        estimation += 1;
+        height += 1;
+      }
+      int sum = 1;
+      for(int k = 1; k < height; k++){
+        sum += (k+1) * pow(no_of_partitions,k);
+      }
+      sum -= (height)*(estimation - no_possiblities);
+      cash_low_bound[ no_possiblities ] = sum;
+      return sum;
     }
   }
 
@@ -362,7 +371,7 @@ int main(){
     maker.generate_sequence(i);
 
     int black_hits = 0, white_hits=0;
-    int attempts_limit = 10;
+    int attempts_limit = 20;
     int attempts = 0;
 
     clock_t start = clock();
